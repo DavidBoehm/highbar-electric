@@ -29,10 +29,12 @@ body {
   animation: pulse-slow 3s ease-in-out infinite;
 }
 
-/* Tron-style border animation for stat cards */
+/* Tron-style border animation for stat cards - always running, subtle */
 .stat-card {
   position: relative;
   overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .stat-card::before {
@@ -40,57 +42,39 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 0.75rem;
-  padding: 2px;
-  background: linear-gradient(90deg, transparent, transparent, transparent, transparent);
+  padding: 1px;
+  background: conic-gradient(from var(--angle, 0deg), transparent 0%, transparent 30%, rgba(239, 68, 68, 0.4) 40%, rgba(239, 68, 68, 0.6) 50%, rgba(239, 68, 68, 0.4) 60%, transparent 70%, transparent 100%);
   -webkit-mask: 
     linear-gradient(#fff 0 0) content-box, 
     linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 0.6;
+  animation: tron-rotate 3s linear infinite;
 }
 
-.stat-card:hover::before {
-  opacity: 1;
-  background: conic-gradient(from 0deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
-  animation: tron-rotate 2s linear infinite;
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
 }
 
 @keyframes tron-rotate {
-  0% {
-    background: conic-gradient(from 0deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
-  }
-  25% {
-    background: conic-gradient(from 90deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
-  }
-  50% {
-    background: conic-gradient(from 180deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
-  }
-  75% {
-    background: conic-gradient(from 270deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
-  }
-  100% {
-    background: conic-gradient(from 360deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  to {
+    --angle: 360deg;
   }
 }
 
-/* Glowing border effect */
+/* Subtle glow effect - always on */
 .stat-card::after {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: -1px;
   border-radius: 0.875rem;
   background: transparent;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  opacity: 0.3;
   z-index: -1;
-}
-
-.stat-card:hover::after {
-  opacity: 1;
   box-shadow: 
-    0 0 20px rgba(239, 68, 68, 0.4),
-    0 0 40px rgba(239, 68, 68, 0.2),
-    inset 0 0 20px rgba(239, 68, 68, 0.1);
+    0 0 10px rgba(239, 68, 68, 0.15),
+    0 0 20px rgba(239, 68, 68, 0.1);
 }
