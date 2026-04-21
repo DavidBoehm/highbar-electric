@@ -28,3 +28,69 @@ body {
 .animate-pulse-slow {
   animation: pulse-slow 3s ease-in-out infinite;
 }
+
+/* Tron-style border animation for stat cards */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 0.75rem;
+  padding: 2px;
+  background: linear-gradient(90deg, transparent, transparent, transparent, transparent);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::before {
+  opacity: 1;
+  background: conic-gradient(from 0deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  animation: tron-rotate 2s linear infinite;
+}
+
+@keyframes tron-rotate {
+  0% {
+    background: conic-gradient(from 0deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  }
+  25% {
+    background: conic-gradient(from 90deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  }
+  50% {
+    background: conic-gradient(from 180deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  }
+  75% {
+    background: conic-gradient(from 270deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  }
+  100% {
+    background: conic-gradient(from 360deg, transparent, transparent, #ef4444, transparent, transparent, transparent, transparent, transparent);
+  }
+}
+
+/* Glowing border effect */
+.stat-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 0.875rem;
+  background: transparent;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
+.stat-card:hover::after {
+  opacity: 1;
+  box-shadow: 
+    0 0 20px rgba(239, 68, 68, 0.4),
+    0 0 40px rgba(239, 68, 68, 0.2),
+    inset 0 0 20px rgba(239, 68, 68, 0.1);
+}
